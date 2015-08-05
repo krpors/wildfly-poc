@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>nl.omgwtfbbq</groupId>
+    <artifactId>wildfly-poc</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>WildFly Proof of Concepts</name>
+    <description>Proof of Concept project, including a mix of several techniques for JavaEE 7.</description>
+
+    <!-- We willen een Web ARchive -->
+    <packaging>war</packaging>
+
+    <properties>
+        <!-- JBoss dependency versions -->
+        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+        <!-- other plugin versions -->
+        <version.war.plugin>2.5</version.war.plugin>
+    </properties>
+
+    <dependencies>
+        <!-- JavaEE 7 dependency. Deze heeft als scope 'provided' wat betekent dat het
+        niet meegenomen hoeft te worden tijdens het packagen door Maven, omdat het
+        'provided' is door iets anders, in dit geval Wildfly. -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- We gebruiken HSQLDB om even snel wat te checken. We doen dit in memory. Deze is
+         NIET provided door Wildfly, dus we moeten hem mee packagen in de WAR file. -->
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.3.3</version>
+        </dependency>
+
+        <!-- Unit test dependency met scope 'test', omdat we die alleen maar tijdens
+        de lifecycle stap 'test' van Maven willen gebruiken. -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- Set the name of the war, used as the context root when the app
+            is deployed -->
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${version.war.plugin}</version>
+                <configuration>
+                    <!-- dit zorgt ervoor dat de WAR plugin niet gaat zeiken over een web.xml
+                    die er niet is, maar whatever, die specificeren we toch maar is toch handig
+                    om er bij te hebben als 'documentatie'. -->
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <!-- WildFly plugin to deploy war -->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${version.wildfly.maven.plugin}</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>
