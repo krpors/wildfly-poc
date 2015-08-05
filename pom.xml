@@ -21,6 +21,14 @@
         <version.war.plugin>2.5</version.war.plugin>
     </properties>
 
+    <!-- JBoss repository for Resteasy. -->
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>jboss</id>-->
+            <!--<url>http://repository.jboss.org/nexus/content/groups/public/</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
+
     <dependencies>
         <!-- JavaEE 7 dependency. Deze heeft als scope 'provided' wat betekent dat het
         niet meegenomen hoeft te worden tijdens het packagen door Maven, omdat het
@@ -31,6 +39,23 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Used for ResteasyConstraintViolation stuff -->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-validator-provider-11</artifactId>
+            <version>3.0.11.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <version>3.0.11.Final</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+
 
         <!-- We gebruiken HSQLDB om even snel wat te checken. We doen dit in memory. Deze is
          NIET provided door Wildfly, dus we moeten hem mee packagen in de WAR file. -->
@@ -48,6 +73,7 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>

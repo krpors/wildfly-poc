@@ -68,4 +68,38 @@ public class ApiError {
     public void setDetail(String detail) {
         this.detail = detail;
     }
+
+    public static ApiErrorBuilder create() {
+        return new ApiErrorBuilder();
+    }
+
+    /**
+     * Builder class for the ApiError.
+     */
+    public static class ApiErrorBuilder {
+        private ApiError err;
+
+        public ApiErrorBuilder() {
+            this.err = new ApiError();
+        }
+
+        public ApiErrorBuilder title(String title) {
+            this.err.setTitle(title);
+            return this;
+        }
+
+        public ApiErrorBuilder code(String code) {
+            this.err.setCode(code);
+            return this;
+        }
+
+        public ApiErrorBuilder detail(String detail) {
+            this.err.setDetail(detail);
+            return this;
+        }
+
+        public ApiError build() {
+            return this.err;
+        }
+    }
 }
