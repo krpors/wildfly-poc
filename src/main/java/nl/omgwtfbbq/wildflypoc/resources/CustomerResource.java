@@ -29,7 +29,6 @@ public class CustomerResource {
     @PersistenceContext(name = "my-unit")
     private EntityManager manager;
 
-
     /**
      * Fetches all customers.
      */
